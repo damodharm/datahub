@@ -2,13 +2,14 @@
 import sys
 import time
 from kazoo.client import KazooClient
-from confluent.schemaregistry.client import CachedSchemaRegistryClient
+from confluent_kafka.avro import CachedSchemaRegistryClient
 
-ZOOKEEPER='localhost:2181'
+ZOOKEEPER_SOURCE= '192.168.0.87:2181'
 AVROLOADPATH = '../../metadata-events/mxe-schemas/src/renamed/avro/com/linkedin/mxe/MetadataChangeEvent.avsc'
 KAFKATOPIC = 'MetadataChangeEvent'
 BOOTSTRAP = 'localhost:9092'
-SCHEMAREGISTRY = 'http://localhost:8081'
+SCHEMAREGISTRY_SOURCE = 'http://192.168.0.87:8081'
+SCHEMAREGISTRY_DESTINATION = 'http://localhost:8081'
 
 
 def build_kafka_dataset_mce(dataset_name, schema, schema_version):
@@ -35,7 +36,7 @@ def produce_kafka_dataset_mce(mce):
     from confluent_kafka.avro import AvroProducer
 
     conf = {'bootstrap.servers': BOOTSTRAP,
-            'schema.registry.url': SCHEMAREGISTRY}
+            'schema.registry.url': SCHEMAREGISTRY_DESTINATION}
     record_schema = avro.load(AVROLOADPATH)
     producer = AvroProducer(conf, default_value_schema=record_schema)
 
@@ -47,9 +48,9 @@ def produce_kafka_dataset_mce(mce):
         sys.stdout.write('Message serialization failed %s' % e)
     producer.flush()
 
-zk = KazooClient(ZOOKEEPER)
+zk = KazooClient(ZOOKEEPER_SOURCE)
 zk.start()
-client = CachedSchemaRegistryClient(SCHEMAREGISTRY)
+client = CachedSchemaRegistryClient(SCHEMAREGISTRY_SOURCE)
 
 topics = zk.get_children("/brokers/topics")
 
@@ -59,6 +60,6 @@ for dataset_name in topics:
     topic = dataset_name + '-value'
     schema_id, schema, schema_version = client.get_latest_schema(topic)
     print topic
-    build_kafka_dataset_mce(dataset_name, str(schema), int(schema_version))
+    build_kafka_dataset_mce(dataset_name, str(schema), int(schema_version if(schema_version) else "1"))
 
 sys.exit(0)

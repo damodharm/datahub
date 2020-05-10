@@ -7,4 +7,4 @@ mkdir -p ${DATA_STORAGE_FOLDER}
 mkdir -p ${DATA_STORAGE_FOLDER}/elasticsearch
 sudo chmod 777 ${DATA_STORAGE_FOLDER}/elasticsearch
 
-docker-compose pull && docker-compose up --build
+docker-compose up --build

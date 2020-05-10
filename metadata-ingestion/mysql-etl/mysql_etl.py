@@ -4,10 +4,10 @@ import time
 import mysql.connector
 from mysql.connector import Error
 
-HOST = 'HOST'
-DATABASE = 'DATABASE'
-USER = 'USER'
-PASSWORD = 'PASSWORD'
+HOST = '192.168.0.87'
+DATABASE = 'postecards'
+USER = 'root'
+PASSWORD = 'toor'
 
 AVROLOADPATH = '../../metadata-events/mxe-schemas/src/renamed/avro/com/linkedin/mxe/MetadataChangeEvent.avsc'
 KAFKATOPIC = 'MetadataChangeEvent'

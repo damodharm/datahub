@@ -1,0 +1,186 @@
+curl 'http://localhost:8080/corpUsers?action=ingest' -X POST -H 'X-RestLi-Protocol-Version:2.0.0' --data '{ "snapshot": {
+    "aspects": [
+        {
+            "com.linkedin.identity.CorpUserInfo": {
+                "active": true,
+                "displayName": "Damodhar Munagala",
+                "fullName": "Damodhar Munagala",
+                "email": "damodharm@thoughtworks.com"
+            }
+        },
+        {
+            "com.linkedin.identity.CorpUserEditableInfo": {}
+        }
+    ],
+    "urn": "urn:li:corpuser:damodharm"
+}
+}'
+
+
+curl 'http://localhost:8080/datasets?action=ingest' -X POST -H 'X-RestLi-Protocol-Version:2.0.0' --data ' {
+"snapshot": {
+    "aspects": [
+        {
+            "com.linkedin.common.Ownership": {
+                "owners": [
+                    {
+                        "owner": "urn:li:corpuser:damodharm",
+                        "type": "DATAOWNER"
+                    }
+                ],
+                "lastModified": {
+                    "time": 0,
+                    "actor": "urn:li:corpuser:damodharm"
+                }
+            }
+        },
+        {
+            "com.linkedin.dataset.UpstreamLineage": {
+                "upstreams": [
+                    {
+                        "auditStamp": {
+                            "time": 0,
+                            "actor": "urn:li:corpuser:damodharm"
+                        },
+                        "dataset": "urn:li:dataset:(urn:li:dataPlatform:kafka,accountbalanceupdated.event,PROD)",
+                        "type": "TRANSFORMED"
+                    }
+                ]
+            }
+        },
+        {
+            "com.linkedin.common.InstitutionalMemory": {
+                "elements": [
+                    {
+                        "url": "https://www.linkedin.com",
+                        "description": "Sample doc",
+                        "createStamp": {
+                            "time": 0,
+                            "actor": "urn:li:corpuser:damodharm"
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:kafka,portfoliobalanceupdated.event,PROD)"
+}
+}'
+
+
+curl 'http://localhost:8080/datasets?action=ingest' -X POST -H 'X-RestLi-Protocol-Version:2.0.0' --data ' {
+    "snapshot": {
+        "aspects": [
+            {
+                "com.linkedin.common.Ownership": {
+                    "owners": [
+                        {
+                            "owner": "urn:li:corpuser:damodharm",
+                            "type": "DATAOWNER"
+                        }
+                    ],
+                    "lastModified": {
+                        "time": 0,
+                        "actor": "urn:li:corpuser:damodharm"
+                    }
+                }
+            },
+            {
+                "com.linkedin.dataset.UpstreamLineage": {
+                    "upstreams": [
+                        {
+                            "auditStamp": {
+                                "time": 0,
+                                "actor": "urn:li:corpuser:damodharm"
+                            },
+                            "dataset": "urn:li:dataset:(urn:li:dataPlatform:kafka,transactioncompleted.event,PROD)",
+                            "type": "TRANSFORMED"
+                        }
+                    ]
+                }
+            },
+            {
+                "com.linkedin.common.InstitutionalMemory": {
+                    "elements": [
+                        {
+                            "url": "https://www.linkedin.com",
+                            "description": "Sample doc",
+                            "createStamp": {
+                                "time": 0,
+                                "actor": "urn:li:corpuser:damodharm"
+                            }
+                        }
+                    ]
+                }
+            }
+        ],
+        "urn": "urn:li:dataset:(urn:li:dataPlatform:kafka,accountbalanceupdated.event,PROD)"
+    }
+    }'
+
+
+    curl 'http://localhost:8080/datasets?action=ingest' -X POST -H 'X-RestLi-Protocol-Version:2.0.0' --data ' {
+        "snapshot": {
+            "aspects": [
+                {
+                    "com.linkedin.common.Ownership": {
+                        "owners": [
+                            {
+                                "owner": "urn:li:corpuser:damodharm",
+                                "type": "DATAOWNER"
+                            }
+                        ],
+                        "lastModified": {
+                            "time": 0,
+                            "actor": "urn:li:corpuser:damodharm"
+                        }
+                    }
+                },
+                {
+                    "com.linkedin.dataset.UpstreamLineage": {
+                        "upstreams": [
+                            {
+                                "auditStamp": {
+                                    "time": 0,
+                                    "actor": "urn:li:corpuser:damodharm"
+                                },
+                                "dataset": "urn:li:dataset:(urn:li:dataPlatform:kafka,user.event,PROD)",
+                                "type": "TRANSFORMED"
+                            },
+                            {
+                                "auditStamp": {
+                                    "time": 0,
+                                    "actor": "urn:li:corpuser:damodharm"
+                                },
+                                "dataset": "urn:li:dataset:(urn:li:dataPlatform:kafka,card.event,PROD)",
+                                "type": "TRANSFORMED"
+                            },
+                            {
+                                "auditStamp": {
+                                    "time": 0,
+                                    "actor": "urn:li:corpuser:damodharm"
+                                },
+                                "dataset": "urn:li:dataset:(urn:li:dataPlatform:kafka,cardtype.event,PROD)",
+                                "type": "TRANSFORMED"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "com.linkedin.common.InstitutionalMemory": {
+                        "elements": [
+                            {
+                                "url": "https://www.linkedin.com",
+                                "description": "Sample doc",
+                                "createStamp": {
+                                    "time": 0,
+                                    "actor": "urn:li:corpuser:damodharm"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ],
+            "urn": "urn:li:dataset:(urn:li:dataPlatform:kafka,transactioncompleted.event,PROD)"
+        }
+        }'
