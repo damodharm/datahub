@@ -16,7 +16,7 @@ services:
       - "3306:3306"
     volumes:
       - ../mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
-      - ${DATA_STORAGE_FOLDER}/mysql:/var/lib/mysql
+      - mysqldata:/var/lib/mysql
 
   zookeeper:
     image: confluentinc/cp-zookeeper:5.4.0
@@ -28,7 +28,7 @@ services:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
     volumes:
-      - ${DATA_STORAGE_FOLDER}/zookeeper:/var/opt/zookeeper
+      - zkdata:/var/opt/zookeeper
 
   broker:
     image: confluentinc/cp-kafka:5.4.0
@@ -137,7 +137,7 @@ services:
       - xpack.security.enabled=false
       - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
     volumes:
-      - ${DATA_STORAGE_FOLDER}/elasticsearch:/usr/share/elasticsearch/data
+      - esdata:/usr/share/elasticsearch/data
 
   kibana:
     image: docker.elastic.co/kibana/kibana:5.6.8
@@ -161,7 +161,7 @@ services:
       - "7474:7474"
       - "7687:7687"
     volumes:
-      - ${DATA_STORAGE_FOLDER}/neo4j:/data
+      - neo4jdata:/data
 
   # This "container" is a workaround to pre-create search indices
   elasticsearch-setup:
@@ -176,7 +176,7 @@ services:
       - ELASTICSEARCH_PORT=9200
 
   datahub-gms:
-    image: keremsahin/datahub-gms:latest
+    image: linkedin/datahub-gms:${DATAHUB_VERSION:-latest}
     hostname: datahub-gms
     container_name: datahub-gms
     ports:
@@ -205,7 +205,7 @@ services:
                                    java -jar jetty-runner-9.4.20.v20190813.jar gms.war'"
 
   datahub-frontend:
-    image: keremsahin/datahub-frontend:latest
+    image: linkedin/datahub-frontend:${DATAHUB_VERSION:-latest}
     hostname: datahub-frontend
     container_name: datahub-frontend
     ports:
@@ -220,7 +220,7 @@ services:
       - datahub-gms
 
   datahub-mae-consumer:
-    image: keremsahin/datahub-mae-consumer:latest
+    image: linkedin/datahub-mae-consumer:${DATAHUB_VERSION:-latest}
     hostname: datahub-mae-consumer
     container_name: datahub-mae-consumer
     ports:
@@ -242,7 +242,7 @@ services:
               dockerize -wait http://neo4j:7474 -timeout 240s && java -jar mae-consumer-job.jar'"
 
   datahub-mce-consumer:
-    image: keremsahin/datahub-mce-consumer:latest
+    image: linkedin/datahub-mce-consumer:${DATAHUB_VERSION:-latest}
     hostname: datahub-mce-consumer
     container_name: datahub-mce-consumer
     ports:
@@ -261,3 +261,9 @@ services:
 networks:
   default:
     name: datahub_network
+
+volumes:
+  mysqldata:
+  esdata:
+  neo4jdata:
+  zkdata:

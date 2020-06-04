@@ -5,6 +5,9 @@
 Currently, DataHub only has a support for 3 [entity] types: `datasets`, `users` and `groups`.
 If you want to extend DataHub with your own use cases such as `metrics`, `charts`, `dashboards` etc, you should follow the below steps in order.
 
+Also we use this following diagram to help you visualize the process.
+![onboard-a-new-entity](../imgs/onboard-a-new-entity.png) 
+
 ## 1. Define URN
 Refer to [here](../what/urn.md) for URN definition.
 
@@ -31,12 +34,12 @@ GMS uses [Spring Framework](https://docs.spring.io/spring-framework/docs/current
 ## 7. UI for entity onboarding [WIP]
 
 [Aspect]: ../what/aspect.md
-[`DatasetAspect`]: ../../metadata-models/src/main/pegasus/com/linkedin/metadata/aspect/DatasetAspect.pdsc
+[`DatasetAspect`]: ../../metadata-models/src/main/pegasus/com/linkedin/metadata/aspect/DatasetAspect.pdl
 [Snapshot]: ../what/snapshot.md
-[`DatasetSnapshot`]: ../../metadata-models/src/main/pegasus/com/linkedin/metadata/snapshot/DatasetSnapshot.pdsc
-[Snapshot Union]: ../../metadata-models/src/main/pegasus/com/linkedin/metadata/snapshot/Snapshot.pdsc
+[`DatasetSnapshot`]: ../../metadata-models/src/main/pegasus/com/linkedin/metadata/snapshot/DatasetSnapshot.pdl
+[Snapshot Union]: ../../metadata-models/src/main/pegasus/com/linkedin/metadata/snapshot/Snapshot.pdl
 [Entity]: ../what/entity.md
-[DatasetEntity]: ../../metadata-models/src/main/pegasus/com/linkedin/metadata/entity/DatasetEntity.pdsc
+[DatasetEntity]: ../../metadata-models/src/main/pegasus/com/linkedin/metadata/entity/DatasetEntity.pdl
 [`CorpUsers`]: ../../gms/impl/src/main/java/com/linkedin/metadata/resources/identity/CorpUsers.java
 [resource endpoint]: https://linkedin.github.io/rest.li/user_guide/restli_server#writing-resources
 [sub-resource endpoint]: https://linkedin.github.io/rest.li/user_guide/restli_server#sub-resources
